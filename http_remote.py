@@ -22,11 +22,13 @@ def get_json(url, params={}, headers={}):
     if params:
         url += "?" + urllib.urlencode(params)
     request = urllib2.Request(url, headers=headers)
+    request.add_header('Referer', 'https://open.spotify.com')
     return json.loads(urllib2.urlopen(request).read())
 
 
 def generate_local_hostname():
     """Generate a random hostname under the .spotilocal.com domain"""
+    return '127.0.0.1'
     subdomain = ''.join(choice(ascii_lowercase) for x in range(10))
     return subdomain + '.spotilocal.com'
 
@@ -91,9 +93,9 @@ if __name__ == '__main__':
     oauth_token = get_oauth_token()
     csrf_token = get_csrf_token()
 
-    print "Playing album.."
-    play(oauth_token, csrf_token, 'spotify:album:6eWtdQm0hSlTgpkbw4LaBG')
-    time.sleep(5)
+    # print "Playing album.."
+    # play(oauth_token, csrf_token, 'spotify:album:6eWtdQm0hSlTgpkbw4LaBG')
+    # time.sleep(5)
     print "Pausing song.."
     pause(oauth_token, csrf_token)
     time.sleep(2)
